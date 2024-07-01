@@ -25,13 +25,5 @@ public class UserController {
         iUserService.update(authorDTO);
     }
 
-    @GetMapping("/{id}")
-    public UserDTO findById(@PathVariable Integer id) {
-        return iUserService.findById(id);
-    }
 
-    @GetMapping
-    public List<UserDTO> findAll() {
-        return iUserService.findAll();
-    }
 }
