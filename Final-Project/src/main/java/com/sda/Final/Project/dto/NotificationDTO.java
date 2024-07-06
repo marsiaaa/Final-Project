@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class NotificationDTO {
+
     private Integer id;
 
     @NotNull(message = "The receiver cannot be null!")
@@ -34,12 +35,13 @@ public class NotificationDTO {
             message = "Please insert a valid email address!")
     private String carbon_copy;
 
-    @Pattern(regexp = "^[a-zA-Z0-9]]{2,100}$",
-    message = "Subject length must be between 2 and 100 characters ")
+    //@Pattern(regexp = "^[A-Za-z][A-Za-z0-9!@#$%^&*]*$",
+    //message = "Subject length must be between 2 and 100 characters ")
     private String subject;
 
     private String body;
-    //private Meeting meeting;
+    private MeetingDTO meeting;
+
 
 
 }

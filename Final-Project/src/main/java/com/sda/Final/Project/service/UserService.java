@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +20,7 @@ public class UserService implements IUserService{
 
     @Override
     public void save(UserDTO userDTO) {
-        if (!userRepository.findAllByName(userDTO.getName()).isEmpty()) {
+        if (!userRepository.findAllByEmail(userDTO.getEmail()).isEmpty()) {
             throw new BadRequestException("This user already exists");
         }
         userRepository.save(UserMapper.toEntity(userDTO));
@@ -46,6 +45,30 @@ public class UserService implements IUserService{
         } else {
             throw new NotFoundException("User not found");
 
+        }
+    }
+
+    @Override
+    public UserDTO findByEmail(String email) {
+        Optional<UserEntity> userEntityOptional = userRepository.findUserEntityByEmail(email);
+
+        if (userEntityOptional.isPresent()) {
+            UserEntity userEntity = userEntityOptional.get();
+            return UserMapper.toDTO(userEntity);
+        } else {
+            throw new NotFoundException("User not found with email: " + email);
+        }
+    }
+
+    @Override
+    public void deleteCurrentUser(UserDTO userDTO) {
+        Optional<UserEntity> userEntityOptional = userRepository.findUserEntityByEmail(userDTO.getEmail());
+
+        if (userEntityOptional.isPresent()) {
+            UserEntity userEntity = userEntityOptional.get();
+            userRepository.delete(userEntity);
+        } else {
+            throw new NotFoundException("User not found with email: " + userDTO.getEmail());
         }
     }
 }

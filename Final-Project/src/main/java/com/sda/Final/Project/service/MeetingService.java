@@ -12,19 +12,24 @@ import com.sda.Final.Project.repository.UserRepository;
 import com.sda.Final.Project.repository.MeetingRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+
 @Transactional
 @RequiredArgsConstructor
+@Service
 public class MeetingService implements iMeetingService{
 
+    //@Autowired
     private final MeetingRepository meetingRepository;
+  //  @Autowired
     private final UserRepository userRepository;
+   // @Autowired
     private final ClientRepository clientRepository;
 
 
@@ -79,12 +84,14 @@ public class MeetingService implements iMeetingService{
         meetingRepository.deleteById(id);
     }
 
-//    @Override
-//    public boolean canCreateMeeting(MeetingDTO meetingDTO) {
-//                if(meetingRepository.existsByStartDateAndHourAndEndDateAndHour(meetingDTO.getStartDateAndHour() ,meetingDTO.getEndDateAndHour() )){
-////            MeetingService meetingService = new MeetingService();
-////            meetingService.save(meetingDTO);
-//        }
-//            throw new BadRequestException("Please select another Date or Time");
-//    }
+    @Override
+    public boolean canCreateMeeting(MeetingDTO meetingDTO) {
+       // if (meetingRepository.existsByStartDateAndEndDate(
+        //      meetingDTO.getStartDateAndHour(), meetingDTO.getEndDateAndHour())) {
+           // throw new BadRequestException("A meeting with the same start and end time already exists.");
+      //  }
+
+       // meetingRepository.save(MeetingMapper.toEntity(meetingDTO));
+        return false;
+    }
 }

@@ -12,5 +12,7 @@ public interface iMeetingService {
     List<MeetingDTO> findAll();
     void delete (Integer id);
 
-   // boolean canCreateMeeting(MeetingDTO meetingDTO);
+    boolean canCreateMeeting(MeetingDTO meetingDTO);
+
+    // boolean canCreateMeeting(MeetingDTO meetingDTO);
 }

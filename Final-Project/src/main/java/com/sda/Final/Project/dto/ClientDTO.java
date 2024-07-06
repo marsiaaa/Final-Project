@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ClientDTO{
     private Integer id;
 
@@ -32,4 +34,8 @@ public class ClientDTO{
     @Pattern(regexp = "^[A-Za-z]+ [A-Za-z]+$",
             message = "Please insert your Email")
     private String email;
+
+    public ClientDTO(Integer id) {
+        this.id = id;
+    }
 }
