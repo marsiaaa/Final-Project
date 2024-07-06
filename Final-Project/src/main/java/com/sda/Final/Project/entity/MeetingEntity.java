@@ -3,7 +3,6 @@ package com.sda.Final.Project.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,10 +13,10 @@ public class MeetingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "start_dateAndHour")
+    @Column(name = "start_date")
     private LocalDateTime startDateAndHour;
 
-    @Column(name = "end_dateAndHour")
+    @Column(name = "end_date")
     private LocalDateTime endDateAndHour;
 
     @Column(name = "subject")

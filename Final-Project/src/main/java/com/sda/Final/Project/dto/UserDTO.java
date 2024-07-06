@@ -27,8 +27,8 @@ public class UserDTO {
     @NotNull
     @NotEmpty(message = "Email must not be empty")
     @NotBlank(message = "Email must not be blank")
-    @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@\" +\n" +
-            "(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,7}$",
+    @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$",
+
             message = "Please enter the correct email format")
     private String email;
     @NotNull
@@ -47,4 +47,9 @@ public class UserDTO {
     private String feedback;
 
     private float rating;
+    public UserDTO(Integer id) {
+        this.id = id;
+    }
+
+
 }

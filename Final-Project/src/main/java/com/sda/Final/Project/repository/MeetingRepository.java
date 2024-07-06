@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
 public interface MeetingRepository extends JpaRepository<MeetingEntity , Integer> {
        // List<MeetingEntity> findAllBySubject();
-       // boolean existsByStartDateAndHourAndEndDateAndHour(LocalDateTime startDateAndHour, LocalDateTime endDateAndHour);
+       //boolean existsByStartDateAndEndDate(LocalDateTime startDate, LocalDateTime endDate);
 }

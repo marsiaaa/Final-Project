@@ -48,4 +48,27 @@ public class UserService implements IUserService{
 
         }
     }
+    @Override
+    public UserDTO findByEmail(String email) {
+        Optional<UserEntity> userEntityOptional = userRepository.findUserEntityByEmail(email);
+
+        if (userEntityOptional.isPresent()) {
+            UserEntity userEntity = userEntityOptional.get();
+            return UserMapper.toDTO(userEntity);
+        } else {
+            throw new NotFoundException("User not found with email: " + email);
+        }
+    }
+
+    @Override
+    public void deleteCurrentUser(String email) {
+        Optional<UserEntity> userEntityOptional = userRepository.findUserEntityByEmail(email);
+
+        if (userEntityOptional.isPresent()) {
+            UserEntity userEntity = userEntityOptional.get();
+            userRepository.delete(userEntity);
+        } else {
+            throw new NotFoundException("User not found with email: " + email);
+        }
+    }
 }

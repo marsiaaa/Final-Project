@@ -24,11 +24,10 @@ public class NotificationEntity {
     @Column(name = "body")
     private String body;
 
-    //@OneToOne(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "id_meeting_notification", referencedColumnName = "id")
-    //private Meeting meeting;
-
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_meeting_notification", referencedColumnName = "id")
+    private MeetingEntity meeting;
 
 
 }
+

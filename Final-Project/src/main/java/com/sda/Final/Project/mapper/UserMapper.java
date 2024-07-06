@@ -2,10 +2,10 @@ package com.sda.Final.Project.mapper;
 
 import com.sda.Final.Project.dto.UserDTO;
 import com.sda.Final.Project.entity.UserEntity;
-import org.springframework.security.core.userdetails.User;
 
 public class UserMapper {
     public static UserEntity toEntity(UserDTO userDTO) {
+
         return extractFields(userDTO, new UserEntity());
     }
 
@@ -28,16 +28,16 @@ public class UserMapper {
     }
 
     private static UserEntity extractFields(UserDTO userDTO, UserEntity userEntity) {
-        userEntity.setId(userEntity.getId());
-        userEntity.setName(userEntity.getName());
-        userEntity.setSurname(userEntity.getSurname());
-        userEntity.setEmail(userEntity.getEmail());
-        userEntity.setPassword(userEntity.getPassword());
-        userEntity.setDateCreated(userEntity.getDateCreated());
-        userEntity.setDateModified(userEntity.getDateModified());
-        userEntity.setLocation(userEntity.getLocation());
-        userEntity.setFeedback(userEntity.getFeedback());
-        userEntity.setRating(userEntity.getRating());
+        userEntity.setId(userDTO.getId());
+        userEntity.setName(userDTO.getName());
+        userEntity.setSurname(userDTO.getSurname());
+        userEntity.setEmail(userDTO.getEmail());
+        userEntity.setPassword(userDTO.getPassword());
+        userEntity.setDateCreated(userDTO.getDateCreated());
+        userEntity.setDateModified(userDTO.getDateModified());
+        userEntity.setLocation(userDTO.getLocation());
+        userEntity.setFeedback(userDTO.getFeedback());
+        userEntity.setRating(userDTO.getRating());
         return userEntity;
     }
 }

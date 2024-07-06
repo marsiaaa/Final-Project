@@ -12,31 +12,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/meeting")
 public class MeetingController {
+
     @Autowired
-    private iMeetingService meetingService;
+    private iMeetingService iMeetingService;
 
     @PostMapping
     public void save(@RequestBody @Valid  MeetingDTO meetingDTO){
-        meetingService.save(meetingDTO);
+        iMeetingService.save(meetingDTO);
     }
 
     @GetMapping("/{id}")
     public MeetingDTO findById(@PathVariable ("id")Integer id){
-        return meetingService.findById(id);
+        return iMeetingService.findById(id);
     }
 
     @GetMapping
     public List<MeetingDTO> findAll(){
-        return meetingService.findAll();
+        return iMeetingService.findAll();
     }
 
     @PutMapping
     public void update(@RequestBody @Valid MeetingDTO meetingDTO){
-        meetingService.update(meetingDTO);
+        iMeetingService.update(meetingDTO);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id){
-        meetingService.delete(id);
+        iMeetingService.delete(id);
     }
 }
