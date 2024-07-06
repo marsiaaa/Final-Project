@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,8 +35,15 @@ public class MeetingService implements iMeetingService{
                 .findAllByName(meetingDTO.getIdClientMeeting().getName());
         List<UserEntity> userEntityList = userRepository
                 .findAllByName(meetingDTO.getIdUserMeeting().getName());
-        if(!clientEntityList.isEmpty() && !userEntityList.isEmpty()){
-            throw new BadRequestException("You hava a scheduled meeting already");
+
+        LocalDateTime startDateTime = meetingDTO.getStartDateAndHour();
+        LocalDateTime endDateTime = meetingDTO.getEndDateAndHour();
+
+
+        if(!clientEntityList.isEmpty() && !userEntityList.isEmpty() ){
+            if(startDateTime.equals()){
+                throw new BadRequestException("You hava a scheduled meeting already");
+            }
         }
         meetingRepository.save(MeetingMapper.toEntity(meetingDTO));
     }
