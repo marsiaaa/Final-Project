@@ -8,8 +8,4 @@ public interface IUserService {
     void save(UserDTO userDTO);
     void update(UserDTO userDTO);
     void delete (Integer id);
-
-    UserDTO findByEmail(String email);
-
-    void deleteCurrentUser(UserDTO userDTO);
 }
