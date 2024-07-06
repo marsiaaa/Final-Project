@@ -14,10 +14,10 @@ public class MeetingEntity {
     private Integer id;
 
     @Column(name = "start_date")
-    private LocalDateTime startDateAndHour;
+    private LocalDateTime startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDateAndHour;
+    private LocalDateTime endDate;
 
     @Column(name = "subject")
     private String subject;

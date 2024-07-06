@@ -12,10 +12,8 @@ import com.sda.Final.Project.repository.UserRepository;
 import com.sda.Final.Project.repository.MeetingRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,31 +34,39 @@ public class MeetingService implements iMeetingService{
 
     @Override
     public void save(MeetingDTO meetingDTO) {
-        List<ClientEntity> clientEntityList = clientRepository
-                .findAllByName(meetingDTO.getIdClientMeeting().getName());
-        List<UserEntity> userEntityList = userRepository
-                .findAllByName(meetingDTO.getIdUserMeeting().getName());
+        UserEntity userEntity = userRepository.findById(meetingDTO.getIdUserMeeting().getId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
-        LocalDateTime startDateTime = meetingDTO.getStartDateAndHour();
-        LocalDateTime endDateTime = meetingDTO.getEndDateAndHour();
+        ClientEntity clientEntity = clientRepository.findById(meetingDTO.getIdClientMeeting().getId())
+                .orElseThrow(() -> new NotFoundException("Client not found"));
 
 
-        if(!clientEntityList.isEmpty() && !userEntityList.isEmpty() ){
-            if(startDateTime.equals()){
+
+            if(meetingRepository.existsByStartDateAndEndDate(
+                    meetingDTO.getStartDateAndHour(), meetingDTO.getIdClientMeeting().getId(), meetingDTO.getIdUserMeeting().getId()
+            )){
                 throw new BadRequestException("You hava a scheduled meeting already");
             }
-        }
-        meetingRepository.save(MeetingMapper.toEntity(meetingDTO));
+
+        meetingRepository.save(MeetingMapper.toEntity(meetingDTO, userEntity, clientEntity));
     }
 
     @Override
     public void update(MeetingDTO meetingDTO) {
+
+        UserEntity userEntity = userRepository.findById(meetingDTO.getIdUserMeeting().getId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        ClientEntity clientEntity = clientRepository.findById(meetingDTO.getIdClientMeeting().getId())
+                .orElseThrow(() -> new NotFoundException("Client not found"));
+
+
         Optional<MeetingEntity> meetingEntityOptional =
                 meetingRepository.findById(meetingDTO.getId());
 
         if(meetingEntityOptional.isPresent()){
             MeetingEntity meetingEntity = meetingEntityOptional.get();
-            meetingEntity = MeetingMapper.toEntityForUpdate(meetingDTO , meetingEntity);
+            meetingEntity = MeetingMapper.toEntityForUpdate(meetingDTO , meetingEntity, userEntity, clientEntity);
 
             meetingRepository.save(meetingEntity);
         }else {

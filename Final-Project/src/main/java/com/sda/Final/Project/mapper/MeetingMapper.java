@@ -7,12 +7,12 @@ import com.sda.Final.Project.entity.UserEntity;
 
 public class MeetingMapper {
 
-    public static MeetingEntity toEntity(MeetingDTO meetingDTO){
-        return extractFrields(new MeetingEntity() , meetingDTO );
+    public static MeetingEntity toEntity(MeetingDTO meetingDTO, UserEntity userEntity, ClientEntity clientEntity){
+        return extractFields(new MeetingEntity() , meetingDTO , userEntity, clientEntity);
     }
 
-    public static MeetingEntity toEntityForUpdate(MeetingDTO meetingDTO , MeetingEntity meetingEntity){
-        return extractFrields(meetingEntity , meetingDTO);
+    public static MeetingEntity toEntityForUpdate(MeetingDTO meetingDTO , MeetingEntity meetingEntity,UserEntity userEntity, ClientEntity clientEntity){
+        return extractFields(meetingEntity , meetingDTO, userEntity, clientEntity);
     }
 
     public static MeetingDTO toDTO(MeetingEntity meetingEntity){
@@ -23,13 +23,11 @@ public class MeetingMapper {
 
         return meetingDTO;
     }
-    private static MeetingEntity extractFrields(MeetingEntity meetingEntity , MeetingDTO meetingDTO){
-        UserEntity userEntity = UserMapper.toEntity(meetingDTO.getIdUserMeeting());
-        ClientEntity clientEntity = ClientMapper.toEntity(meetingDTO.getIdClientMeeting());
+    private static MeetingEntity extractFields(MeetingEntity meetingEntity , MeetingDTO meetingDTO, UserEntity userEntity, ClientEntity clientEntity){
 
         meetingEntity.setSubject(meetingDTO.getSubject());
-        meetingEntity.setEndDateAndHour(meetingDTO.getEndDateAndHour());
-        meetingEntity.setStartDateAndHour(meetingDTO.getStartDateAndHour());
+        meetingEntity.setEndDate(meetingDTO.getEndDateAndHour());
+        meetingEntity.setStartDate(meetingDTO.getStartDateAndHour());
         meetingEntity.setIdUserMeeting(userEntity);
         meetingEntity.setIdClientMeeting(clientEntity);
 
