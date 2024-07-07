@@ -12,4 +12,6 @@ public interface MeetingRepository extends JpaRepository<MeetingEntity , Integer
 
        @Query("select case when count(m) > 0 then true else false end from MeetingEntity m where m.startDate <= :startDate and m.endDate>= :startDate and m.idUserMeeting.id = :userId and m.idClientMeeting.id = :clientId")
        boolean existsByStartDateAndEndDate(LocalDateTime startDate,  Integer clientId, Integer userId);
+
+
 }
