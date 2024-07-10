@@ -1,6 +1,7 @@
 package com.sda.Final.Project.service;
 
 import com.sda.Final.Project.dto.MeetingDTO;
+import com.sda.Final.Project.dto.NotificationDTO;
 import com.sda.Final.Project.entity.ClientEntity;
 import com.sda.Final.Project.entity.MeetingEntity;
 import com.sda.Final.Project.entity.UserEntity;
@@ -24,12 +25,11 @@ import java.util.stream.Collectors;
 @Service
 public class MeetingService implements iMeetingService{
 
-    //@Autowired
+
     private final MeetingRepository meetingRepository;
-  //  @Autowired
     private final UserRepository userRepository;
-   // @Autowired
     private final ClientRepository clientRepository;
+    private final NotificationService notificationService;
 
 
     @Override
@@ -42,13 +42,29 @@ public class MeetingService implements iMeetingService{
 
 
 
-            if(meetingRepository.existsByStartDateAndEndDate(
-                    meetingDTO.getStartDateAndHour(), meetingDTO.getIdClientMeeting().getId(), meetingDTO.getIdUserMeeting().getId()
-            )){
-                throw new BadRequestException("You hava a scheduled meeting already");
-            }
+        if(meetingRepository.existsByStartDateAndEndDate(
+                meetingDTO.getStartDateAndHour(), meetingDTO.getIdClientMeeting().getId(), meetingDTO.getIdUserMeeting().getId()
+        )){
+            throw new BadRequestException("You hava a scheduled meeting already");
+        }
 
-        meetingRepository.save(MeetingMapper.toEntity(meetingDTO, userEntity, clientEntity));
+        MeetingEntity m = meetingRepository.save(MeetingMapper.toEntity(meetingDTO, userEntity, clientEntity));
+
+        sendMail(m, "Meeting confirmation", "Dear %s,\nYour meeting is confirmed on" + m.getStartDate() + ".\nBest regards,\nSuperior Business Card Team");
+    }
+
+    private void sendMail(MeetingEntity m, String subject, String body) {
+        MeetingDTO meetingDTOForNotif = new MeetingDTO();
+        meetingDTOForNotif.setId(m.getId());
+
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setMeeting(meetingDTOForNotif);
+        notificationDTO.setBody(body);
+        notificationDTO.setSubject(subject);
+        notificationDTO.setReceiver(m.getIdUserMeeting().getEmail());
+        notificationDTO.setSender(m.getIdClientMeeting().getEmail());
+
+        notificationService.save(notificationDTO);
     }
 
     @Override
@@ -69,9 +85,12 @@ public class MeetingService implements iMeetingService{
             meetingEntity = MeetingMapper.toEntityForUpdate(meetingDTO , meetingEntity, userEntity, clientEntity);
 
             meetingRepository.save(meetingEntity);
+            sendMail(meetingEntity, "Meeting update", "Dear %s,\n\nYour meeting is confirmed on " + meetingEntity.getStartDate() + ".\nBest regards,\nSuperior Business Card Team");
         }else {
             throw new NotFoundException("Meeting cannot be found");
         }
+
+
     }
 
     @Override
@@ -98,14 +117,4 @@ public class MeetingService implements iMeetingService{
         meetingRepository.deleteById(id);
     }
 
-    @Override
-    public boolean canCreateMeeting(MeetingDTO meetingDTO) {
-       // if (meetingRepository.existsByStartDateAndEndDate(
-        //      meetingDTO.getStartDateAndHour(), meetingDTO.getEndDateAndHour())) {
-           // throw new BadRequestException("A meeting with the same start and end time already exists.");
-      //  }
-
-       // meetingRepository.save(MeetingMapper.toEntity(meetingDTO));
-        return false;
-    }
 }
