@@ -8,7 +8,8 @@ import java.util.List;
 public interface IClientService {
     void save(ClientDTO clientDTO) ;
     void update(ClientDTO clientDTO);
-    ClientDTO findById(Integer id);
+    ClientDTO findByEmail(String email);
+
     List<ClientDTO> findAll();
     void delete (Integer id);
 

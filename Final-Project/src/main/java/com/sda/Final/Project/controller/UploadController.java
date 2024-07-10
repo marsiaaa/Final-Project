@@ -3,14 +3,15 @@ package com.sda.Final.Project.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sda.Final.Project.dto.UploadDto;
 import com.sda.Final.Project.dto.UserDTO;
+import com.sda.Final.Project.service.iUploadService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.sda.Final.Project.service.iUploadService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/upload")
@@ -23,7 +24,7 @@ public class UploadController {
     public ResponseEntity<UploadDto> upload(
             @RequestParam("image") MultipartFile multipartFile ,
             @RequestParam("UserDTO") String json
-            ){
+    ){
         try{
             UploadDto uploadDto = new UploadDto();
             uploadDto.setImage(multipartFile.getBytes());

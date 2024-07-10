@@ -33,3 +33,12 @@ public class UserEntity {
     private float rating;
 
 }
+
+
+
+
+
+
+
+
+

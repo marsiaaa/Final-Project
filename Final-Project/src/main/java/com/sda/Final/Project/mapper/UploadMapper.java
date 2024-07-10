@@ -15,7 +15,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 
-
 public class UploadMapper {
 
     private static final Path ROOT = Path.of("C:\\Users\\Sosana\\Desktop\\sda\\Spring\\Final-Project2\\Final-Project\\src\\main\\resources\\img");

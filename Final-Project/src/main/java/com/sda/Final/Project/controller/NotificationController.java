@@ -1,8 +1,6 @@
 package com.sda.Final.Project.controller;
 
-import com.sda.Final.Project.dto.ClientDTO;
 import com.sda.Final.Project.dto.NotificationDTO;
-import com.sda.Final.Project.dto.UserDTO;
 import com.sda.Final.Project.service.INotificationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,47 +19,27 @@ public class NotificationController {
     public void saveNotification(@RequestBody @Valid NotificationDTO notificationDTO) {
         notificationService.save(notificationDTO);
     }
-
-    @GetMapping("/findAllByUser")
-    public List<NotificationDTO> findAllByUserId(Integer userDTO) {
-        return notificationService.findAll();
+    @GetMapping("/findAllByUser/{id}")
+    public List<NotificationDTO> findAllByUserId(@PathVariable Integer id) {
+        return notificationService.findAllUser(id);
     }
 
-    /*
-
-    @GetMapping("/findAllByClient")
-    public List<NotificationDTO> findAllByClient(@RequestParam Integer clientId) {
-        ClientDTO clientDTO = new ClientDTO();
-        clientDTO.setId(clientId);
-        return notificationService.findAll(clientDTO);
+    @GetMapping("/findAllByClient/{id}")
+    public List<NotificationDTO> findAllByClientId(@PathVariable Integer id) {
+        return notificationService.findAllClient(id);
     }
-
-    @DeleteMapping("/deleteByUser")
-    public void deleteNotificationByUser(@RequestParam Integer id) {
-        notificationService.delete(new UserDTO(id));
+    @DeleteMapping("/deleteByUser/{id}")
+    public void deleteNotificationByUser(@PathVariable Integer id) {
+        notificationService.deleteByUserId(id);
     }
-
-    @DeleteMapping("/deleteByClient")
-    public void deleteNotificationByClient(@RequestParam Integer id) {
-        notificationService.delete(new ClientDTO(id));
+    @DeleteMapping("/deleteByClient/{id}")
+    public void deleteNotificationByClient(@PathVariable Integer id) {
+        notificationService.deleteByClientId(id);
     }
-
     @DeleteMapping("/deleteAll")
     public void deleteAllNotifications() {
         notificationService.deleteAll();
     }
 
-    @PutMapping("/update")
-    public void updateNotification(@RequestBody NotificationDTO notificationDTO) {
-        notificationService.update(notificationDTO);
-    }
-
-    @GetMapping("/findById")
-    public NotificationDTO findNotificationById(@RequestParam Integer id) {
-        return notificationService.findById(id);
-    }
-
-*/
-
-
 }
+

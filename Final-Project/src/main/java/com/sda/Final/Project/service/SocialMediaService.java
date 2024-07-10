@@ -32,14 +32,18 @@ public class SocialMediaService implements ISocialMediaService{
                 findById(
                         socialMediaDTO.getUserDTO().getId()
                 );
-        if (userEntityOpt.isPresent()){
-            SocialMediaEntity socialMediaEntity = SocialMediaMapper.toEntity(socialMediaDTO,userEntityOpt.get());
-            socialMediaRepository.save(socialMediaEntity);
-        } else {
+        if (userEntityOpt.isEmpty()){
             throw new NotFoundException("User not found for these accounts");
         }
+        if (socialMediaRepository.existsByUserEntity_Id(socialMediaDTO.getUserDTO().getId())) {
+            throw new BadRequestException("Social media already exists");
+        }
+        SocialMediaEntity socialMediaEntity = SocialMediaMapper.toEntity(socialMediaDTO,userEntityOpt.get());
+        socialMediaRepository.save(socialMediaEntity);
 
     }
+
+
 
     @Override
     public void update(SocialMediaDTO socialMediaDTO) {
@@ -51,8 +55,9 @@ public class SocialMediaService implements ISocialMediaService{
                 .findById(
                         socialMediaDTO.getId()
                 );
-        if (userEntityOpt.isPresent()&& socialMediaEntityOptional.isPresent()){
-            SocialMediaEntity socialMediaEntity = SocialMediaMapper.toEntityForUpdate(socialMediaEntityOptional.get(),
+        if (socialMediaEntityOptional.isPresent()){
+            SocialMediaEntity socialMediaEntity = SocialMediaMapper.toEntityForUpdate(
+                    socialMediaEntityOptional.get(),
                     socialMediaDTO,userEntityOpt.get());
             socialMediaRepository.save(socialMediaEntity);
         }else {

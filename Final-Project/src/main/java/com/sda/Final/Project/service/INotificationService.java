@@ -1,6 +1,5 @@
 package com.sda.Final.Project.service;
 
-import com.sda.Final.Project.dto.ClientDTO;
 import com.sda.Final.Project.dto.NotificationDTO;
 import com.sda.Final.Project.dto.UserDTO;
 
@@ -8,25 +7,19 @@ import java.util.List;
 
 public interface INotificationService {
     void save(NotificationDTO notificationDTO);
-   List<NotificationDTO> findAll(UserDTO userDTO);
+    List<NotificationDTO> findAllUser(Integer id);
 
-   // List<NotificationDTO> findAll(ClientDTO clientDTO);
-
-   // void delete (UserDTO Id);
-
-    //void delete(ClientDTO Id);
+    List<NotificationDTO> findAllClient(Integer id);
+    void deleteByUserId (Integer id);
+    void deleteByClientId(Integer id);
 
     // restricted feature only for admin, TODO when implementing securiy
-   // void deleteAll();
-   // void update(NotificationDTO notificationDTO);
-  //  NotificationDTO findById(Integer id);
-   // Integer countNotifications(UserDTO userDTO, ClientDTO clientDTO);
+    void deleteAll();
 
-   // List<NotificationDTO> findByReadStatus(UserDTO userDTO, boolean read);
+    //Integer countNotifications (Integer id);
 
-   // List<NotificationDTO> findByReadStatus(ClientDTO clientDTO, boolean read);
+    //Integer countNotifications(UserDTO userDTO);
 
-    //List<NotificationDTO> findAll(UserDTO userDTO, int page, int size);
 
 
 

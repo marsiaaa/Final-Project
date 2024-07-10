@@ -17,8 +17,8 @@ public class NotificationDTO {
     @NotBlank(message = "The receiver cannot be blank!")
     @NotEmpty(message = "The receiver cannot be empty!")
     @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
-             "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$",
-    message = "Please insert a valid email address for sender!")
+            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$",
+            message = "Please insert a valid email address for sender!")
 
     private String sender;
 
