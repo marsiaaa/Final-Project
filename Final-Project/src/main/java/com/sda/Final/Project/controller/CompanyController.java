@@ -1,5 +1,6 @@
 package com.sda.Final.Project.controller;
 
+import com.sda.Final.Project.dto.ClientDTO;
 import com.sda.Final.Project.dto.CompanyDTO;
 import jakarta.validation.Valid;
 import com.sda.Final.Project.service.iCompanyService;
@@ -37,5 +38,10 @@ public class CompanyController {
     @DeleteMapping("/{id}")
     public void delete (@PathVariable Integer id){
         iCompanyService.delete(id);
+    }
+
+    @GetMapping("/clients/{companyId}")
+    public List<ClientDTO> findAllClientsOfCompany( @PathVariable("companyId") Integer companyId) {
+        return iCompanyService.findAllClientsOfCompany(companyId);
     }
 }

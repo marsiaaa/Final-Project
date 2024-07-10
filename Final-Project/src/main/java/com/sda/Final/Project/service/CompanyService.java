@@ -1,5 +1,6 @@
 package com.sda.Final.Project.service;
 
+import com.sda.Final.Project.dto.ClientDTO;
 import com.sda.Final.Project.dto.CompanyDTO;
 import com.sda.Final.Project.dto.UserDTO;
 import com.sda.Final.Project.entity.CompanyEntity;
@@ -8,12 +9,15 @@ import com.sda.Final.Project.exception.BadRequestException;
 import com.sda.Final.Project.exception.NotFoundException;
 import com.sda.Final.Project.mapper.CompanyMapper;
 import com.sda.Final.Project.repository.CompanyRepository;
+import com.sda.Final.Project.repository.MeetingRepository;
 import com.sda.Final.Project.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,6 +33,8 @@ public class CompanyService implements iCompanyService{
 
     @Autowired
     private final UserRepository userRepository;
+    @Autowired
+    private final MeetingRepository meetingRepository;
 
     @Override
     public void save(CompanyDTO companyDTO) {
@@ -80,5 +86,18 @@ public class CompanyService implements iCompanyService{
     @Override
     public void delete(Integer id) {
         companyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ClientDTO> findAllClientsOfCompany(Integer companyId) {
+        Optional<CompanyEntity> companyEntityOptional =
+                companyRepository.findById(companyId);
+
+        if (companyEntityOptional.isPresent()) {
+            UserEntity userEntity = companyEntityOptional.get().getIdUserCompany();
+           return meetingRepository.findAllClientsOfUser(userEntity.getId());
+        }
+
+        return Collections.emptyList();
     }
 }

@@ -1,5 +1,6 @@
 package com.sda.Final.Project.service;
 
+import com.sda.Final.Project.dto.ClientDTO;
 import com.sda.Final.Project.dto.CompanyDTO;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface iCompanyService {
     CompanyDTO findById(Integer id);
     List<CompanyDTO> findAll();
     void delete (Integer id);
+    List<ClientDTO> findAllClientsOfCompany(Integer compnyId);
 }
