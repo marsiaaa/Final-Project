@@ -17,10 +17,12 @@ public class MeetingMapper {
 
     public static MeetingDTO toDTO(MeetingEntity meetingEntity){
         MeetingDTO meetingDTO = new MeetingDTO();
-
+        meetingDTO.setId(meetingEntity.getId());
         meetingDTO.setIdClientMeeting(ClientMapper.toDTO(meetingEntity.getIdClientMeeting()));
         meetingDTO.setIdUserMeeting(UserMapper.toDTO(meetingEntity.getIdUserMeeting()));
-
+        meetingDTO.setSubject(meetingEntity.getSubject());
+        meetingDTO.setEndDateAndHour(meetingEntity.getEndDate());
+        meetingDTO.setStartDateAndHour(meetingEntity.getStartDate());
         return meetingDTO;
     }
     private static MeetingEntity extractFields(MeetingEntity meetingEntity , MeetingDTO meetingDTO, UserEntity userEntity, ClientEntity clientEntity){
